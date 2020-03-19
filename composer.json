@@ -1,0 +1,22 @@
+{
+    "name": "hiweb/hiweb-api-client",
+    "description": "Hiweb API Client",
+    "type": "library",
+    "require": {
+        "hackerboy/json-api": "^2.0",
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Khanh Doan",
+            "email": "k@hiweb.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "Hiweb\\HiwebApiClient\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
