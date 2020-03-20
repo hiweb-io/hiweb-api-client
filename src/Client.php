@@ -145,7 +145,7 @@ class Client {
         $jsonapi = $response->getBody();
 
         // Validate data
-        if (!Validator::isValidResponseString($jsonapi)) {
+        if (!Validator::isValidResponseString((string) $jsonapi)) {
             throw new Exceptions\InvalidJsonApiResponseException('Invalid JSON:API response data');
         }
 
