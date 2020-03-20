@@ -5,7 +5,7 @@ namespace Hiweb\HiwebApiClient;
 use Exception;
 use GuzzleHttp\Client as HttpClient;
 use HackerBoy\JsonApi\Helpers\Validator;
-use HackerBoy\JsonApi\Flexible\Document;
+use HackerBoy\JsonApi\Flexible\Document as FlexibleDocument;
 
 class Client {
 
