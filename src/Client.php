@@ -127,6 +127,9 @@ class Client {
             $options['headers'] = [];
         }
 
+        // Content type
+        $options['headers']['Content-Type'] = 'application/vnd.api+json';
+
         // Token
         if ($this->token) {
             $options['headers']['Authorization'] = 'Bearer '.$this->token;
