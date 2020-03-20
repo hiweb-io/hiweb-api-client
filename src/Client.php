@@ -142,10 +142,10 @@ class Client {
 
         // Make request
         $response = $this->httpClient->request($method, $endpoint, $options);
-        $jsonapi = $response->getBody();
+        $jsonapi = (string) $response->getBody();
 
         // Validate data
-        if (!Validator::isValidResponseString((string) $jsonapi)) {
+        if (!Validator::isValidResponseString($jsonapi)) {
             throw new Exceptions\InvalidJsonApiResponseException('Invalid JSON:API response data');
         }
 
