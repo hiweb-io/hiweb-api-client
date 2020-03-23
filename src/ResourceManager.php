@@ -208,7 +208,7 @@ class ResourceManager {
             try {
 
                 // Try to get from api
-                $response = $this->client->get($this->type.'/'.$id, $options);
+                $response = $this->client->get($this->type, $options);
 
                 // Increase page
                 $page++;
