@@ -137,7 +137,7 @@ class Client {
 
         // Website id
         if ($this->websiteId) {
-            $options['headers']['Website-Id'] = $this->websiteId;
+            $options['headers']['Hiweb-Website-Id'] = $this->websiteId;
         }
 
         // Make request
