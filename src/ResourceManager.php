@@ -193,6 +193,7 @@ class ResourceManager {
         $document = new Document;
 
         $resources = [];
+        $includedResources = [];
         $continue = true;
         $page = 1;
         $limit = ($resourceLimit >= 1 and $resourceLimit <= 100) ? $resourceLimit : 100;
@@ -250,7 +251,7 @@ class ResourceManager {
 
                 // Add resources to document included data
                 foreach ($included as $resource) {
-                    $document->addIncluded($resource);
+                    $includedResources[] = $resource;
                 }
             }
             
@@ -273,7 +274,7 @@ class ResourceManager {
             }
         }
 
-        return $document->setData($resources);
+        return $document->setData($resources)->setIncluded($includedResources);
     
     }
 
