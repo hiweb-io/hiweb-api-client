@@ -117,7 +117,7 @@ class ResourceManager {
         } catch (RequestException $e) {
 
             // If 404
-            if ($e->getResponse()->getStatusCode() === 404) {
+            if ($e->getResponse() and $e->getResponse()->getStatusCode() === 404) {
                 return null;
             }
 
@@ -216,7 +216,7 @@ class ResourceManager {
             } catch (RequestException $e) {
 
                 // If 404
-                if ($e->getResponse()->getStatusCode() === 404) {
+                if ($e->getResponse() and $e->getResponse()->getStatusCode() === 404) {
                     $continue = false;
                     break;
                 }
