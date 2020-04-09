@@ -134,18 +134,40 @@ class ResourceManager {
     /**
      * Get resources
      * 
-     * @param array Filter or query data
+     * @param array Request options or query data
      * @param integer Max crawl pages, default 1, set 0 for unlimited
-     * @param integer Resource limit / page
      * @return \HackerBoy\JsonApi\Flexible\Document|null
      */
-    public function get(array $filter = [], $maxCrawlPages = 1, $resourceLimit = 100)
+    public function get(array $customOptions = [], $maxCrawlPages = 1)
     {
         // Request options
         $options = [];
 
+        // Page and limit
+        $page = 1;
+        $limit = 100;
+        $sort = null;
+
         // Filter data is set
-        if (count($filter)) {
+        if (count($customOptions)) {
+
+            // If page is set
+            if (isset($customOptions['page']) and intval($customOptions['page']) >= 1) {
+                $page = intval($customOptions['page']);
+            }
+
+            // If limit is set
+            if (isset($customOptions['limit']) and intval($customOptions['limit']) >= 1 and intval($customOptions['limit']) <= 100) {
+                $limit = intval($customOptions['limit']);
+            }
+
+            // If sorting is set
+            if (isset($customOptions['sort'])) {
+                $sort = $customOptions['sort'];
+            }
+
+            // Filter
+            $filter = (isset($customOptions['filter']) and is_array($customOptions['filter'])) ? $customOptions['filter'] : [];
 
             // If is query data (single condition)
             if (array_key_exists('field', $filter)) {
@@ -154,7 +176,12 @@ class ResourceManager {
                     'query' => json_encode($filter)
                 ];
 
-            } elseif (isset($filter[0]) and isset($filter[0]['field'])) { // If is query data (multiple conditions)
+            // If is query data (multiple conditions)
+            } elseif (isset($filter[0]) and is_array($filter[0]) and isset($filter[0]['field'])) {
+
+                $filter = array_filter($filter, function($filterData) {
+                    return is_array($filterData) and isset($filterData['field']);
+                });
 
                 // Check filter data valid
                 foreach ($filter as $queryData) {
@@ -171,7 +198,7 @@ class ResourceManager {
                     'query' => json_encode($filter)
                 ];
 
-            } else {
+            } elseif (count($filter)) {
 
                 $queryData = [];
 
@@ -195,9 +222,7 @@ class ResourceManager {
         $resources = [];
         $includedResources = [];
         $continue = true;
-        $page = 1;
-        $limit = ($resourceLimit >= 1 and $resourceLimit <= 100) ? $resourceLimit : 100;
-
+        
         while ($continue) {
 
             // Set page
@@ -205,6 +230,11 @@ class ResourceManager {
                 'page' => $page,
                 'limit' => 100
             ];
+
+            // If sorting is set
+            if ($sort) {
+                $options['query']['sort'] = $sort;
+            }
 
             try {
 
