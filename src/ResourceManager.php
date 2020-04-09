@@ -151,6 +151,15 @@ class ResourceManager {
         // Filter data is set
         if (count($customOptions)) {
 
+            $validOptions = ['page', 'limit', 'sort', 'filter'];
+
+            foreach ($customOptions as $option => $value) {
+
+                if (!in_array($option, $validOptions)) {
+                    throw new \Exception('Invalid options data for get collection of resources method.');
+                }
+            }
+
             // If page is set
             if (isset($customOptions['page']) and intval($customOptions['page']) >= 1) {
                 $page = intval($customOptions['page']);
