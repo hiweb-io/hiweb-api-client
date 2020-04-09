@@ -20,6 +20,11 @@ class Client {
     protected $websiteId;
 
     /**
+    * Default header
+    */
+    protected $headers = [];
+
+    /**
      * Http client
      */
     protected $httpClient;
@@ -58,6 +63,18 @@ class Client {
     public function setWebsiteId($id)
     {
         $this->websiteId = $id;
+        return $this;
+    }
+
+    /**
+    * Set headers
+    *
+    * @param array
+    * @return $this
+    */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
         return $this;
     }
 
@@ -126,6 +143,9 @@ class Client {
         if (!array_key_exists('headers', $options) or !is_array($options['headers'])) {
             $options['headers'] = [];
         }
+
+        // Merge with default headers
+        $options['headers'] = array_merge($options['headers'], $this->headers);
 
         // Content type
         $options['headers']['Content-Type'] = 'application/vnd.api+json';
