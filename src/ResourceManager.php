@@ -37,9 +37,10 @@ class ResourceManager {
      * 
      * @param array Attributes
      * @param array Relationships
+     * @param array Meta
      * @return \HackerBoy\JsonApi\Flexible\Document|null
      */
-    public function create(array $attributes = [], array $relationships = [])
+    public function create(array $attributes = [], array $relationships = [], array $meta = [])
     {
         // Document to send
         $document = new Document;
@@ -52,6 +53,10 @@ class ResourceManager {
 
         if (count($relationships)) {
             $resource->setRelationships($relationships);
+        }
+
+        if (count($meta)) {
+            $resource->setMeta($meta);
         }
 
         // Add resource to document
@@ -71,9 +76,10 @@ class ResourceManager {
      * @param string Resource id
      * @param array Attributes
      * @param array Relationships
+     * @param array Meta
      * @return \HackerBoy\JsonApi\Flexible\Document|null
      */
-    public function update(string $id, array $attributes = [], array $relationships = [])
+    public function update(string $id, array $attributes = [], array $relationships = [], array $meta = [])
     {
         // Document to send
         $document = new Document;
@@ -87,6 +93,10 @@ class ResourceManager {
 
         if (count($relationships)) {
             $resource->setRelationships($relationships);
+        }
+
+        if (count($meta)) {
+            $resource->setMeta($meta);
         }
 
         // Add resource to document
