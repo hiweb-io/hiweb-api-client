@@ -307,7 +307,7 @@ class ResourceManager {
             }
 
             // Meta data found
-            if ($meta and count($meta)) {
+            if ($meta and $meta = $meta->toArray()) {
                 $metaData = array_merge($metaData, $meta);
             }
             
