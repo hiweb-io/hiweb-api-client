@@ -247,7 +247,7 @@ class ResourceManager {
             // Set page
             $options['query'] = [
                 'page' => $page,
-                'limit' => 100
+                'limit' => $limit
             ];
 
             // If sorting is set
