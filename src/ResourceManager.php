@@ -240,6 +240,7 @@ class ResourceManager {
 
         $resources = [];
         $includedResources = [];
+        $metaData = [];
         $continue = true;
         
         while ($continue) {
@@ -284,6 +285,7 @@ class ResourceManager {
             // API data
             $data = $response->document->getData();
             $included = $response->document->getIncluded();
+            $meta = $response->document->getMeta();
             
             // Resource found
             if ($data and count($data)) {
@@ -302,6 +304,11 @@ class ResourceManager {
                 foreach ($included as $resource) {
                     $includedResources[] = $resource;
                 }
+            }
+
+            // Meta data found
+            if ($meta and count($meta)) {
+                $metaData = array_merge($metaData, $meta);
             }
             
             // Data length < limit
@@ -323,7 +330,7 @@ class ResourceManager {
             }
         }
 
-        return $document->setData($resources)->setIncluded($includedResources);
+        return $document->setData($resources)->setIncluded($includedResources)->setMeta($metaData);
     
     }
 
