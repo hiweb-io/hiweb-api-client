@@ -152,6 +152,7 @@ class ResourceManager {
     {
         // Request options
         $options = [];
+        $options['query'] = is_array($options['query']) ? $options['query'] : [];
 
         // Page and limit
         $page = 1;
@@ -233,6 +234,15 @@ class ResourceManager {
                 ];
             }
 
+            // Result filters
+            $resultFilters = ['includes', 'excludes', 'include_relationships', 'exclude_relationships'];
+            foreach ($resultFilters as $resultFilter) {
+
+                if (isset($customOptions[$resultFilter]) and is_array($customOptions[$resultFilter])) {
+                    $options['query'][$resultFilter] = $customOptions[$resultFilter];
+                }
+            }
+
         }
         
         // Document
@@ -246,10 +256,8 @@ class ResourceManager {
         while ($continue) {
 
             // Set page
-            $options['query'] = [
-                'page' => $page,
-                'limit' => $limit
-            ];
+            $options['query']['page'] = $page;
+            $options['query']['limit'] = $limit;
 
             // If sorting is set
             if ($sort) {
