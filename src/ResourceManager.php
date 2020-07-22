@@ -161,7 +161,7 @@ class ResourceManager {
         // Filter data is set
         if (count($customOptions)) {
 
-            $validOptions = ['page', 'limit', 'sort', 'filter'];
+            $validOptions = ['page', 'limit', 'sort', 'filter', 'includes', 'excludes', 'include_relationships', 'exclude_relationships'];
 
             foreach ($customOptions as $option => $value) {
 
