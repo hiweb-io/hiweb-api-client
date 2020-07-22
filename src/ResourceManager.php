@@ -152,7 +152,7 @@ class ResourceManager {
     {
         // Request options
         $options = [];
-        $options['query'] = is_array($options['query']) ? $options['query'] : [];
+        $options['query'] = [];
 
         // Page and limit
         $page = 1;
