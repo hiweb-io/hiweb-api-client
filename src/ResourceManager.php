@@ -172,8 +172,8 @@ class ResourceManager {
             }
 
             // If page is set
-            if (isset($customOptions['page']) and intval($customOptions['page']) >= 1) {
-                $page = intval($customOptions['page']);
+            if (isset($customOptions['page'])) {
+                $page = $customOptions['page'];
             }
 
             // If limit is set
