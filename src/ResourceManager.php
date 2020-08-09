@@ -271,7 +271,13 @@ class ResourceManager {
                 $response = $this->client->get($this->type, $options);
 
                 // Increase page
-                $page = @$response->document->getMeta()['next'];
+                $meta = $response->document->getMeta();
+                if (!$meta or !$metaArray = $meta->toArray() or !is_array($metaArray) or !isset($metaArray['next'])) {
+                    $continue = false;
+                    break;
+                }
+
+                $page = $metaArray['next'];
 
                 // +1 to crawled page count
                 $crawledPageCount++;
