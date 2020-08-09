@@ -155,7 +155,7 @@ class ResourceManager {
         $options['query'] = [];
 
         // Page and limit
-        $page = 1;
+        $page = null;
         $limit = 100;
         $sort = null;
 
@@ -252,6 +252,7 @@ class ResourceManager {
         $includedResources = [];
         $metaData = [];
         $continue = true;
+        $crawledPageCount = 1;
         
         while ($continue) {
 
@@ -270,7 +271,10 @@ class ResourceManager {
                 $response = $this->client->get($this->type, $options);
 
                 // Increase page
-                $page++;
+                $page = @$response->document->getMeta()['next'];
+
+                // +1 to crawled page count
+                $crawledPageCount++;
 
             } catch (RequestException $e) {
 
@@ -332,7 +336,13 @@ class ResourceManager {
             }
 
             // If max crawl pages is set
-            if ($maxCrawlPages and $page >= $maxCrawlPages) {
+            if ($maxCrawlPages and $crawledPageCount >= $maxCrawlPages) {
+                $continue = false;
+                break;
+            }
+
+            // Next page is null
+            if (!$page) {
                 $continue = false;
                 break;
             }
