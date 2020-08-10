@@ -274,13 +274,14 @@ class ResourceManager {
                 $meta = $response->document->getMeta();
                 if (!$meta or !$metaArray = $meta->toArray() or !is_array($metaArray) or !isset($metaArray['next'])) {
                     $continue = false;
-                    break;
+                } else {
+
+                    // Set next page cursor
+                    $page = $metaArray['next'];
+
+                    // +1 to crawled page count
+                    $crawledPageCount++;
                 }
-
-                $page = $metaArray['next'];
-
-                // +1 to crawled page count
-                $crawledPageCount++;
 
             } catch (RequestException $e) {
 
