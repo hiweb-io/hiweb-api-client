@@ -336,12 +336,6 @@ class ResourceManager {
                 break;
             }
 
-            // If next link is not set - stop
-            if (!$links = $response->document->getLinks() or !is_array($links) or !array_key_exists('next', $links)) {
-                $continue = false;
-                break;
-            }
-
             // If max crawl pages is set
             if ($maxCrawlPages and $crawledPageCount >= $maxCrawlPages) {
                 $continue = false;
